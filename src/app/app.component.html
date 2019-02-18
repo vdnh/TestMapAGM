@@ -1,0 +1,54 @@
+<agm-map 
+  [latitude]="options.lat" 
+  [longitude]="options.lng" 
+  [zoom]="options.zoom"
+  [disableDefaultUI]="false"
+  [zoomControl]="true"
+  (mapClick)="mapClicked($event)"
+  #agmMap
+>
+  <agm-drawing-manager 
+    (polygonComplete)="polygonCreated($event)" 
+    [drawingControl]="managerOptions.drawingControl" 
+    [drawingControlOptions]="managerOptions.drawingControlOptions"
+    [polygonOptions]='managerOptions.polygonOptions' 
+    [drawingMode]='managerOptions.drawingMode'
+    >
+  </agm-drawing-manager>
+
+  <!-- test to marker and circle -->
+      <agm-marker 
+      *ngFor="let m of markers; let i = index"
+      (markerClick)="clickedMarker(m.label, i)"
+      [latitude]="m.lat"
+      [longitude]="m.lng"
+      [label]="m.label"
+      [markerDraggable]="m.draggable"
+      (dragEnd)="markerDragEnd(m, $event)">
+      
+    <agm-info-window>
+      <strong>InfoWindow content</strong>
+    </agm-info-window>
+    
+  </agm-marker>
+  
+  <agm-circle [latitude]="options.lat + 0.3" [longitude]="options.lng" 
+      [radius]="15000"
+      [fillColor]="'red'"
+      [circleDraggable]="true"
+      [editable]="true">
+  </agm-circle>
+
+  <agm-circle 
+    [latitude]="options.lat + 0.8" 
+    [longitude]="options.lng"
+    [radius]="30000"
+    [fillColor]="'blue'"
+    [circleDraggable]="false"
+    [editable]="true"
+  >
+  </agm-circle>
+  <!-- endtest to marker and circle -->
+</agm-map>
+<!-- <button (click)="getPath()">Get Latest Path</button> -->
+
